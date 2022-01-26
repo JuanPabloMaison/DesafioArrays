@@ -117,3 +117,9 @@ precioTotal = obtenerPrecioTotal();
 console.log(
   `El precio total de tu compra es de ${precioTotal}, ¡Gracias por tu compra!`
 );
+
+let precioAsc = computadoras.sort((a, b) => a.precio - b.precio);
+console.log("Ordenado por precio ascendente ", precioAsc);
+
+let precioDesc = computadoras.sort((a, b) => b.precio - a.precio);
+console.log("Ordenado por precio descendente", precioDesc);
