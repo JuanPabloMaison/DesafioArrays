@@ -63,6 +63,7 @@ const computadoras = [
 let carrito = [];
 let precioTotal;
 
+//declaramos la funcion en donde le pedimos al usuario el ingreso por numero de producto
 function simDeCompras() {
   let idProducto =
     prompt(`Escriba el número del producto que desea comprar, sino escriba 'ESC' para finalizar
@@ -72,10 +73,13 @@ function simDeCompras() {
   3: ${computadoras[3].marca}, Precio: ${computadoras[3].precio}
   4: ${computadoras[4].marca}, Precio: ${computadoras[4].precio}`);
 
+  //decimos que MIENTRAS que el usuario no escriba ESC, el bucle seguira funcionando y preguntando.
   while (idProducto !== "ESC") {
     console.log(
       `Se ha añadido al carrito la notebook ${computadoras[idProducto].marca}`
     );
+
+    // Chequeamos que esa notebook ya se encuentra en el array con el metodo find(). Este metodo, en caso de dar true, nos devuelve el primer elemento del array que cumple con la condicion de busqueda
 
     let computadoraEnCarrito = carrito.find((elemento) => {
       if (elemento.id == idProducto) {
@@ -84,16 +88,22 @@ function simDeCompras() {
     });
 
     if (computadoraEnCarrito) {
+      // Si la notebook esta en el carrito, computadoraEnCarrito devolvera true, por lo cual este bloque de codigo se va a ejecutar y le sumara uno a la cantidad de esa pc.
+      // Primero tenemos que encontrar el index donde esta esa notebook.
       let index = carrito.findIndex((elemento) => {
         if (elemento.id === computadoraEnCarrito.id) {
           return true;
         }
       });
+
+      //invocamos los metodos para actualizar la unidad y el precio del item
       carrito[index].agregarItem();
       carrito[index].actualizarPrecioTotal();
     } else {
       carrito.push(new Computadora(computadoras[idProducto]));
     }
+
+    //Una vez que se termina de agregar el producto al carrito, le volvemos a preguntar al usuario si desea seguir comprando.
     idProducto =
       prompt(`¿Desea seguir comprando?, sino escriba 'ESC' para finalizar
   0: ${computadoras[0].marca}, Precio: ${computadoras[0].precio}
@@ -103,6 +113,7 @@ function simDeCompras() {
   4: ${computadoras[4].marca}, Precio: ${computadoras[4].precio}`);
   }
 }
+//Recorremos el array para obtener el precio total.
 
 function obtenerPrecioTotal() {
   let precioTotal = 0;
@@ -112,14 +123,19 @@ function obtenerPrecioTotal() {
   return precioTotal;
 }
 
+//invocamos a la funcion del prompt que se hizo al principio.
 simDeCompras();
 precioTotal = obtenerPrecioTotal();
 console.log(
   `El precio total de tu compra es de ${precioTotal}, ¡Gracias por tu compra!`
 );
 
+//ordenamos el array de manera ascendente
+
 let precioAsc = computadoras.sort((a, b) => a.precio - b.precio);
 console.log("Ordenado por precio ascendente ", precioAsc);
+
+//ordenamos el array de manera descendente
 
 let precioDesc = computadoras.sort((a, b) => b.precio - a.precio);
 console.log("Ordenado por precio descendente", precioDesc);
